@@ -8,6 +8,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.SocketException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -15,9 +16,10 @@ import javax.swing.JOptionPane;
 
 import Shapes.Shape;
 import model.Command;
+import model.DisconnectCommand;
 import view.NetpaintGUI;
 
-public class NetpaintClient extends JFrame{
+public class NetpaintClient{
 	
 	private String clientName;
 	private NetpaintGUI netpaintGUI;
@@ -63,10 +65,11 @@ public class NetpaintClient extends JFrame{
 			server = new Socket(host, Integer.parseInt(port));
 			out = new ObjectOutputStream(server.getOutputStream());
 			in = new ObjectInputStream(server.getInputStream());
+			setupGUI();
 			
 			out.writeObject(clientName);
 			
-			this.addWindowListener(new WindowAdapter() {
+			netpaintGUI.addWindowListener(new WindowAdapter() {
 				public void windowClosing(WindowEvent ev){
 					try{
 						out.writeObject(new DisconnectCommand(clientName));
@@ -79,7 +82,7 @@ public class NetpaintClient extends JFrame{
 				}
 			});
 			
-			//setupGUI();
+			
 			
 			new Thread(new ServerHandler()).start();
 		}
@@ -88,8 +91,19 @@ public class NetpaintClient extends JFrame{
 		}
 	}
 	
-	public void update(List<Shape> shapes) {
-		
-		netpaintGUI.paintComponents((Graphics) shapes);
+	public void setupGUI(){
+		netpaintGUI = new NetpaintGUI(out);
 	}
+	
+
+	
+	public static void main(String args[]){
+		new NetpaintClient();
+	}
+
+	public void update(ArrayList<Shape> shapes) {
+		netpaintGUI.setShapes(shapes);
+	}
+
+
 }

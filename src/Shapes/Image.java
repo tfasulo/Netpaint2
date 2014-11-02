@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.Serializable;
 
 /**
  * The Image objects for drawing the Images in the {@link DrawingArea}.
@@ -11,7 +12,7 @@ import java.awt.image.BufferedImage;
  *
  */
 
-public class Image extends Shape{
+public class Image extends Shape implements Serializable{
 
 	BufferedImage image;
 	

@@ -3,6 +3,7 @@ package Shapes;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.io.Serializable;
 
 /**
  * The abstract base class for all the possible shapes.
@@ -10,7 +11,7 @@ import java.awt.Point;
  *
  */
 
-abstract public class Shape {
+abstract public class Shape implements Serializable{
 
 	protected Point upperLeft;
 	protected Point dimensions;

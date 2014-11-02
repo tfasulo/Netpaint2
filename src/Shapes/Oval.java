@@ -3,6 +3,7 @@ package Shapes;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.io.Serializable;
 
 /**
  * The Oval objects for drawing the Ovals in the {@link DrawingArea}.
@@ -10,7 +11,7 @@ import java.awt.Graphics2D;
  *
  */
 
-public class Oval extends Shape{
+public class Oval extends Shape implements Serializable{
 	
 	/**
 	 * Oval constructor for drawing an Oval.

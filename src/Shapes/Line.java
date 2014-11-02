@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.io.Serializable;
 
 /**
  * The Line objects for drawing the Lines in the {@link DrawingArea}.
@@ -11,7 +12,7 @@ import java.awt.Point;
  *
  */
 
-public class Line extends Shape{
+public class Line extends Shape implements Serializable{
 
 	/**
 	 * Line constructor for drawing a Line.

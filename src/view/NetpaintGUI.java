@@ -14,6 +14,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
@@ -24,6 +25,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 
+import model.AddObjectCommand;
 import Shapes.Image;
 import Shapes.Line;
 import Shapes.Oval;
@@ -50,23 +52,23 @@ public class NetpaintGUI extends JFrame {
 	private JRadioButton image;
 	private BufferedImage doge=null;
 	private ArrayList<Shape> shapes = new ArrayList<Shape>();
+	private ObjectOutputStream out;
+	private Shape newshape;
 
 /**
  * Constructs a new NetpaintGUI object.	
  * @param args - the command line arguments passed to the program. This program does not do anything with these arguments.
  */
 	
-	public static void main(String[] args) {
 
-		new NetpaintGUI();
-	}
 	
 /**
  * Constructs a Netpaint GUI and adds objects to it. Objects that are included are {@link JColorChooser}, {@link JRadioButton}s, {@link Shape}s drawn such as {@link Rectangle}.
  */
 
-	public NetpaintGUI() {
+	public NetpaintGUI(ObjectOutputStream output) {
 
+		out = output;
 		colorChooser = new JColorChooser(Color.BLACK);
 
 		drawingArea = new DrawingArea();
@@ -114,6 +116,10 @@ public class NetpaintGUI extends JFrame {
 	 * @author Trevor, Jason
 	 *
 	 */
+	public void setShapes(ArrayList<Shape> shapes){
+		shapes = this.shapes;
+		repaint();
+	}
 
 	private class DrawingArea extends JPanel {
 
@@ -190,6 +196,8 @@ public class NetpaintGUI extends JFrame {
 			@Override
 			public void mousePressed(MouseEvent arg0) {
 
+				
+				
 				if (rectangle.isSelected() || oval.isSelected()
 						|| line.isSelected() || image.isSelected()) {
 
@@ -198,22 +206,31 @@ public class NetpaintGUI extends JFrame {
 						pivotY = arg0.getY();
 					} else {
 						if (rectangle.isSelected()) {
-							shapes.add(new Rectangle(upperX, upperY,
-									colorChooser.getColor(), width, height));
+							newshape=new Rectangle(upperX, upperY,
+									colorChooser.getColor(), width, height);
+							
+							
+							
 						} 
 						
 						else if (oval.isSelected()) {
-							shapes.add(new Oval(upperX, upperY, colorChooser
-									.getColor(), width, height));
+							newshape = new Oval(upperX, upperY, colorChooser
+									.getColor(), width, height);
 						} 
 						
 						else if (line.isSelected()) {
-							shapes.add(new Line(pivotX, pivotY, newX, newY,
-									colorChooser.getColor()));
+							newshape = new Line(pivotX, pivotY, newX, newY,
+									colorChooser.getColor());
 						}
 						
 						else if (image.isSelected()){
-							shapes.add(new Image(upperX, upperY, width, height, doge));
+							newshape = new Image(upperX, upperY, width, height, doge);
+						}
+						shapes.add(newshape);
+						try {
+							out.writeObject(new AddObjectCommand(newshape));
+						} catch (IOException e) {
+							e.printStackTrace();
 						}
 					}
 
@@ -367,4 +384,5 @@ public class NetpaintGUI extends JFrame {
 			}
 		}
 	}
+
 }

@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
+import java.io.Serializable;
 
 /**
  * The Rectangle objects for drawing the rectangles in the {@link DrawingArea}.
@@ -11,7 +12,7 @@ import java.awt.geom.Rectangle2D;
  *
  */
 
-public class Rectangle extends Shape{
+public class Rectangle extends Shape implements Serializable{
 	
 	/**
 	 * Rectangle constructor for drawing a Rectangle.
