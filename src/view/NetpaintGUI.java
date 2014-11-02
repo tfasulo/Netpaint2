@@ -117,8 +117,9 @@ public class NetpaintGUI extends JFrame {
 	 *
 	 */
 	public void setShapes(ArrayList<Shape> shapes){
-		shapes = this.shapes;
+		this.shapes = shapes;
 		repaint();
+		
 	}
 
 	private class DrawingArea extends JPanel {
@@ -224,7 +225,7 @@ public class NetpaintGUI extends JFrame {
 						}
 						
 						else if (image.isSelected()){
-							newshape = new Image(upperX, upperY, width, height, doge);
+							newshape = new Image(upperX, upperY, width, height);
 						}
 						shapes.add(newshape);
 						try {
@@ -259,6 +260,7 @@ public class NetpaintGUI extends JFrame {
 			} catch (IOException e) {
 			    e.printStackTrace();
 			}
+			
 			super.paintComponent(g);
 			Graphics2D g2 = (Graphics2D) g;
 

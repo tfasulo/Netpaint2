@@ -53,8 +53,8 @@ public class NetpaintClient{
 	
 	public NetpaintClient(){
 		
-		String host = JOptionPane.showInputDialog("Host address:");
-		String port = JOptionPane.showInputDialog("Host port:");
+		String host = "localhost";//JOptionPane.showInputDialog("Host address:");
+		String port = "9001";//JOptionPane.showInputDialog("Host port:");
 		clientName = JOptionPane.showInputDialog("Username:");
 		
 		if(host == null || port == null || clientName == null){

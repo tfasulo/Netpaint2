@@ -9,7 +9,7 @@ public class UpdateClientCommand extends Command<NetpaintClient>{
 	private ArrayList<Shape> shapes;
 
 	public UpdateClientCommand(ArrayList<Shape> shapes){
-		this.shapes = shapes;
+		this.shapes = new ArrayList<Shape>(shapes);
 	}
 
 	@Override
